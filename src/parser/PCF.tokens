@@ -1,0 +1,16 @@
+T__0=1
+T__1=2
+T__2=3
+T__3=4
+VAR=5
+ASSIGN=6
+OP1=7
+OP2=8
+LIT=9
+WS=10
+LINE_COMMENT=11
+'ifz'=1
+'then'=2
+'else'=3
+'let'=4
+'='=6

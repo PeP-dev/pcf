@@ -1,0 +1,15 @@
+T__0=1
+T__1=2
+T__2=3
+VAR=4
+ASSIGN=5
+OP1=6
+OP2=7
+LIT=8
+WS=9
+LINE_COMMENT=10
+'ifz'=1
+'then'=2
+'else'=3
+'[aA-zZ]'=4
+'='=5
