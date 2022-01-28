@@ -2,8 +2,9 @@ package ast;
 
 import interp.Env;
 import interp.Value;
+import typer.Type;
 
-public class Var extends Term {
+public class Let extends Term {
     String name;
     Term value;
     Term link;
@@ -16,15 +17,21 @@ public class Var extends Term {
         return value;
     }
 
-    public Var(String name, Term value, Term link) {
+    public Let(String name, Term value, Term link) {
         this.name = name;
         this.value = value;
         this.link = link;
     }
 
     @Override
-    public Value interp(Env e) {
-        e.addVar(this);
+    public Value interp(Env<Value> e) {
+        Value interpretedVal = value.interp(e);
+        e = e.add(name,interpretedVal);
         return link.interp(e);
+    }
+
+    @Override
+    public Type typer(Env<Type> e) {
+        return null;
     }
 }

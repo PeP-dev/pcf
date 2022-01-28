@@ -1,24 +1,30 @@
 package interp;
 
-import ast.Var;
+import java.util.Optional;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-public class EmptyEnv extends Env{
-    Map<String,Var> vars = new HashMap<>();
-
+public class EmptyEnv<T> extends Env<T>{
     @Override
-    public void addVar(Var v) {
-        vars.put(v.getName(),v);
+    public boolean isEmpty() {
+        return false;
     }
 
     @Override
-    public Var getVar(String varName) {
-        if (!vars.containsKey(varName)){
-            throw new VarNotDeclaredException(varName);
-        }
-        return vars.get(varName);
+    public Binding last() {
+        return null;
+    }
+
+    @Override
+    public Env<T> previous() {
+        return null;
+    }
+
+    @Override
+    public Optional<T> lookup(String id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public String toString() {
+        return "EmptyEnv{}";
     }
 }

@@ -1,7 +1,9 @@
 package ast;
 
+import interp.Closure;
 import interp.Env;
 import interp.Value;
+import typer.Type;
 
 public class Fun extends Term {
     private final String argument;
@@ -20,6 +22,11 @@ public class Fun extends Term {
     }
     @Override
     public Value interp(Env e) {
-        return execution.interp(e);
+        return new Closure(argument, execution);
+    }
+
+    @Override
+    public Type typer(Env<Type> e) {
+        return execution.typer(e);
     }
 }
