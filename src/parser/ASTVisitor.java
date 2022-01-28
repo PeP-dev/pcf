@@ -50,11 +50,15 @@ public class ASTVisitor extends PCFBaseVisitor<AST> {
 
     @Override
     public AST visitFun(PCFParser.FunContext ctx) {
-        return new Fun(ctx.VAR().getText(), (Term) visit(ctx.term(0),));
+        return new Fun(ctx.VAR().getText(), (Term) visit(ctx.term()));
     }
 
     @Override
     public AST visitFunUse(PCFParser.FunUseContext ctx) {
-        return super.visitFunUse(ctx);
+        List<PCFParser.TermContext> ANTLRTerms = ctx.term();
+        List<Term> terms = new ArrayList<>();
+        for (PCFParser.TermContext ANTLRTerm : ANTLRTerms)
+            terms.add((Term) visit(ANTLRTerm));
+        return new FunUse(ctx.VAR().getText(),terms);
     }
 }

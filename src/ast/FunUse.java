@@ -4,6 +4,8 @@ import interp.Env;
 import interp.NotAFunctionException;
 import interp.Value;
 
+import java.util.List;
+
 /**
  * Lance l'exécution d'une fonction (dans une variable) contenue dans l'environnement
  * Exemple :
@@ -16,15 +18,15 @@ import interp.Value;
  * Doit renvoyer la valeur 3
  */
 public class FunUse extends VarUse{
-    private Term argumentValue;
+    private List<Term> arguments;
 
-    public FunUse(String varName, Term argumentValue) {
+    public FunUse(String varName, List<Term> arguments) {
         super(varName);
-        this.argumentValue = argumentValue;
+        this.arguments = arguments;
     }
 
-    public Term getArgumentValue() {
-        return argumentValue;
+    public List<Term> getArgumentValue() {
+        return arguments;
     }
 
     /**
@@ -34,11 +36,25 @@ public class FunUse extends VarUse{
      */
     @Override
     public Value interp(Env e) {
-        Var function = e.getVar(varName);
-        if (function instanceof Fun f) {
-            e.addVar(new Var(f.getArgValue(),argumentValue, null));
-            return f.getValue().interp(e);
+        Var funVariable = e.getVar(varName);
+        Fun current;
+        if(funVariable.getValue() instanceof Fun f){
+            current = f;
+        } else {
+            throw new NotAFunctionException(funVariable.getName());
         }
-        throw new NotAFunctionException(function.getName());
+        e.addVar(new Var(current.getArgValue(),arguments.get(0), null));
+        for(int i = 1; i < arguments.size(); i++) {
+            if (current.getExecution() instanceof Fun fun) {
+                e.addVar(new Var(fun.getArgValue(), arguments.get(i), null));
+                current = fun;
+            } else {
+                throw new IllegalArgumentException(String.format("Too much arguments passed to function %s",funVariable.getName()));
+            }
+        }
+        if (current.getExecution() instanceof Fun) {
+            throw new IllegalArgumentException(String.format("Too few arguments passed to function %s",funVariable.getName()));
+        }
+        return funVariable.getValue().interp(e);
     }
 }

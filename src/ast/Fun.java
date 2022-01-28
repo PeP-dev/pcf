@@ -3,17 +3,23 @@ package ast;
 import interp.Env;
 import interp.Value;
 
-import java.util.List;
-
-public class Fun extends Var {
+public class Fun extends Term {
     private final String argument;
-
-    public Fun(String name, Term value,Term link, String argument) {
-        super(name, value, link);
+    private final Term execution;
+    public Fun(String argument, Term execution) {
         this.argument = argument;
+        this.execution = execution;
     }
 
     public String getArgValue() {
         return argument;
+    }
+
+    public Term getExecution() {
+        return execution;
+    }
+    @Override
+    public Value interp(Env e) {
+        return execution.interp(e);
     }
 }
