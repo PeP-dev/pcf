@@ -4,11 +4,17 @@ grammar PCF;
 
 // program : term EOF ;
 term : LIT                                   # Lit
+     | VAR                                   # VarUse
+     | '(' term OP2 term ')'                 # BinOp
+     | '(' term OP1 term ')'                 # BinOp
      | term OP2 term                         # BinOp
      | term OP1 term                         # BinOp
+     | 'let' VAR '=' term 'in' term          # Var
      | 'ifz' term 'then' term 'else' term    # Cond
-     | 'let' VAR ASSIGN term                 # Var
+     | 'fun' VAR '->' term                   # Fun
      ;
+
+
 // règles lexicales
 VAR : [aA-zZ];
 ASSIGN : '=';

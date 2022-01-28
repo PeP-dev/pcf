@@ -38,6 +38,23 @@ public class ASTVisitor extends PCFBaseVisitor<AST> {
 
     @Override
     public AST visitVar(PCFParser.VarContext ctx) {
-        return new Var(ctx.VAR().getText(), ctx.term().getText());
+        TerminalNode var = ctx.VAR();
+        var.getText();
+        return new Var(ctx.VAR().getText(),(Term) visit(ctx.term(0)), (Term) visit(ctx.term(1)));
+    }
+
+    @Override
+    public AST visitVarUse(PCFParser.VarUseContext ctx) {
+        return new VarUse(ctx.VAR().getText());
+    }
+
+    @Override
+    public AST visitFun(PCFParser.FunContext ctx) {
+        return new Fun(ctx.VAR().getText(), (Term) visit(ctx.term(0),));
+    }
+
+    @Override
+    public AST visitFunUse(PCFParser.FunUseContext ctx) {
+        return super.visitFunUse(ctx);
     }
 }

@@ -1,27 +1,30 @@
 package ast;
 
-public class Var extends Term{
-    private String name;
-    private String value;
+import interp.Env;
+import interp.Value;
 
-    public Var(String name, String value) {
-        this.name = name;
-        this.value = value;
-    }
+public class Var extends Term {
+    String name;
+    Term value;
+    Term link;
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
+    public Term getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public Var(String name, Term value, Term link) {
+        this.name = name;
         this.value = value;
+        this.link = link;
+    }
+
+    @Override
+    public Value interp(Env e) {
+        e.addVar(this);
+        return link.interp(e);
     }
 }
