@@ -25,7 +25,28 @@ public class FunUse extends Term{
     }
 
     /**
-     * Récupère la fonction associée au nom de variable passée. Assigne
+     * Exécute une fonction :
+     * <ol>
+     *     <li>
+     *         Si la fonction contient plusieurs arguments
+     *
+     *         let add = fun x -> fun y -> fun z -> term(x + y + z)
+     *         in add 3 4 5
+     *
+     *         interp( ((add 3) 4) 5)
+     *         |
+     *         ---> interp( (add 3) 4)
+     *         |    |
+     *         |    ---> interp add 3
+     *         |    |   |
+     *         |    |   returns Closure(y, fun y -> fun z -> term(x + y + z), e{x=3})
+     *         |    |
+     *         |    returns Closure(z, fun z -> term(x + y + z), e{x=3, y=4})
+     *         |
+     *         returns (term(x + y + z), e={x=3, y=4, z=5})
+     *
+     *     </li>
+     * </ol>
      * @param e l'environnement courant
      * @return la valeur retournée par la fonction
      */
