@@ -31,6 +31,13 @@ public class PCFBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements PC
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitPriority(PCFParser.PriorityContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitVar(PCFParser.VarContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

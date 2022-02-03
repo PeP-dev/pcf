@@ -54,6 +54,12 @@ public class ASTVisitor extends PCFBaseVisitor<AST> {
     }
 
     @Override
+    public AST visitPriority(PCFParser.PriorityContext ctx) {
+        PCFParser.TermContext ANTLRTerm = ctx.term();
+        return visit(ANTLRTerm);
+    }
+
+    @Override
     public AST visitFunUse(PCFParser.FunUseContext ctx) {
         List<PCFParser.TermContext> ANTLRTerms = ctx.term();
         List<Term> terms = new ArrayList<>();

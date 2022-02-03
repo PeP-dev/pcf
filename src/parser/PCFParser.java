@@ -126,6 +126,17 @@ public class PCFParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class PriorityContext extends TermContext {
+		public TermContext term() {
+			return getRuleContext(TermContext.class,0);
+		}
+		public PriorityContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PCFVisitor ) return ((PCFVisitor<? extends T>)visitor).visitPriority(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class VarContext extends TermContext {
 		public TerminalNode VAR() { return getToken(PCFParser.VAR, 0); }
 		public TerminalNode ASSIGN() { return getToken(PCFParser.ASSIGN, 0); }
@@ -209,10 +220,10 @@ public class PCFParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(35);
+			setState(27);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case LIT:
 				{
 				_localctx = new LitContext(_localctx);
 				_ctx = _localctx;
@@ -222,7 +233,7 @@ public class PCFParser extends Parser {
 				match(LIT);
 				}
 				break;
-			case 2:
+			case VAR:
 				{
 				_localctx = new VarUseContext(_localctx);
 				_ctx = _localctx;
@@ -231,9 +242,9 @@ public class PCFParser extends Parser {
 				match(VAR);
 				}
 				break;
-			case 3:
+			case T__0:
 				{
-				_localctx = new BinOpContext(_localctx);
+				_localctx = new PriorityContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(5);
@@ -241,86 +252,67 @@ public class PCFParser extends Parser {
 				setState(6);
 				term(0);
 				setState(7);
-				match(OP2);
-				setState(8);
-				term(0);
-				setState(9);
 				match(T__1);
 				}
 				break;
-			case 4:
-				{
-				_localctx = new BinOpContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(11);
-				match(T__0);
-				setState(12);
-				term(0);
-				setState(13);
-				match(OP1);
-				setState(14);
-				term(0);
-				setState(15);
-				match(T__1);
-				}
-				break;
-			case 5:
+			case T__2:
 				{
 				_localctx = new VarContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(17);
+				setState(9);
 				match(T__2);
-				setState(18);
+				setState(10);
 				match(VAR);
-				setState(19);
+				setState(11);
 				match(ASSIGN);
-				setState(20);
+				setState(12);
 				term(0);
-				setState(21);
+				setState(13);
 				match(T__3);
-				setState(22);
+				setState(14);
 				term(3);
 				}
 				break;
-			case 6:
+			case T__4:
 				{
 				_localctx = new CondContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(24);
+				setState(16);
 				match(T__4);
-				setState(25);
+				setState(17);
 				term(0);
-				setState(26);
+				setState(18);
 				match(T__5);
-				setState(27);
+				setState(19);
 				term(0);
-				setState(28);
+				setState(20);
 				match(T__6);
-				setState(29);
+				setState(21);
 				term(2);
 				}
 				break;
-			case 7:
+			case T__7:
 				{
 				_localctx = new FunContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(31);
+				setState(23);
 				match(T__7);
-				setState(32);
+				setState(24);
 				match(VAR);
-				setState(33);
+				setState(25);
 				match(T__8);
-				setState(34);
+				setState(26);
 				term(1);
 				}
 				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(47);
+			setState(39);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -328,28 +320,28 @@ public class PCFParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(45);
+					setState(37);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 					case 1:
 						{
 						_localctx = new FunUseContext(new TermContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_term);
-						setState(37);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(38);
-						term(9);
+						setState(29);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(30);
+						term(8);
 						}
 						break;
 					case 2:
 						{
 						_localctx = new BinOpContext(new TermContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_term);
-						setState(39);
+						setState(31);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(40);
+						setState(32);
 						match(OP2);
-						setState(41);
+						setState(33);
 						term(6);
 						}
 						break;
@@ -357,18 +349,18 @@ public class PCFParser extends Parser {
 						{
 						_localctx = new BinOpContext(new TermContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_term);
-						setState(42);
+						setState(34);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(43);
+						setState(35);
 						match(OP1);
-						setState(44);
+						setState(36);
 						term(5);
 						}
 						break;
 					}
 					} 
 				}
-				setState(49);
+				setState(41);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			}
@@ -395,7 +387,7 @@ public class PCFParser extends Parser {
 	private boolean term_sempred(TermContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 8);
+			return precpred(_ctx, 7);
 		case 1:
 			return precpred(_ctx, 5);
 		case 2:
@@ -405,21 +397,19 @@ public class PCFParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\22\65\4\2\t\2\3\2"+
-		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3"+
-		"\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2&\n\2\3"+
-		"\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\7\2\60\n\2\f\2\16\2\63\13\2\3\2\2\3\2\3"+
-		"\2\2\2\2<\2%\3\2\2\2\4\5\b\2\1\2\5&\7\20\2\2\6&\7\f\2\2\7\b\7\3\2\2\b"+
-		"\t\5\2\2\2\t\n\7\17\2\2\n\13\5\2\2\2\13\f\7\4\2\2\f&\3\2\2\2\r\16\7\3"+
-		"\2\2\16\17\5\2\2\2\17\20\7\16\2\2\20\21\5\2\2\2\21\22\7\4\2\2\22&\3\2"+
-		"\2\2\23\24\7\5\2\2\24\25\7\f\2\2\25\26\7\r\2\2\26\27\5\2\2\2\27\30\7\6"+
-		"\2\2\30\31\5\2\2\5\31&\3\2\2\2\32\33\7\7\2\2\33\34\5\2\2\2\34\35\7\b\2"+
-		"\2\35\36\5\2\2\2\36\37\7\t\2\2\37 \5\2\2\4 &\3\2\2\2!\"\7\n\2\2\"#\7\f"+
-		"\2\2#$\7\13\2\2$&\5\2\2\3%\4\3\2\2\2%\6\3\2\2\2%\7\3\2\2\2%\r\3\2\2\2"+
-		"%\23\3\2\2\2%\32\3\2\2\2%!\3\2\2\2&\61\3\2\2\2\'(\f\n\2\2(\60\5\2\2\13"+
-		")*\f\7\2\2*+\7\17\2\2+\60\5\2\2\b,-\f\6\2\2-.\7\16\2\2.\60\5\2\2\7/\'"+
-		"\3\2\2\2/)\3\2\2\2/,\3\2\2\2\60\63\3\2\2\2\61/\3\2\2\2\61\62\3\2\2\2\62"+
-		"\3\3\2\2\2\63\61\3\2\2\2\5%/\61";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\22-\4\2\t\2\3\2\3"+
+		"\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2"+
+		"\3\2\3\2\3\2\3\2\3\2\3\2\5\2\36\n\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\7"+
+		"\2(\n\2\f\2\16\2+\13\2\3\2\2\3\2\3\2\2\2\2\63\2\35\3\2\2\2\4\5\b\2\1\2"+
+		"\5\36\7\20\2\2\6\36\7\f\2\2\7\b\7\3\2\2\b\t\5\2\2\2\t\n\7\4\2\2\n\36\3"+
+		"\2\2\2\13\f\7\5\2\2\f\r\7\f\2\2\r\16\7\r\2\2\16\17\5\2\2\2\17\20\7\6\2"+
+		"\2\20\21\5\2\2\5\21\36\3\2\2\2\22\23\7\7\2\2\23\24\5\2\2\2\24\25\7\b\2"+
+		"\2\25\26\5\2\2\2\26\27\7\t\2\2\27\30\5\2\2\4\30\36\3\2\2\2\31\32\7\n\2"+
+		"\2\32\33\7\f\2\2\33\34\7\13\2\2\34\36\5\2\2\3\35\4\3\2\2\2\35\6\3\2\2"+
+		"\2\35\7\3\2\2\2\35\13\3\2\2\2\35\22\3\2\2\2\35\31\3\2\2\2\36)\3\2\2\2"+
+		"\37 \f\t\2\2 (\5\2\2\n!\"\f\7\2\2\"#\7\17\2\2#(\5\2\2\b$%\f\6\2\2%&\7"+
+		"\16\2\2&(\5\2\2\7\'\37\3\2\2\2\'!\3\2\2\2\'$\3\2\2\2(+\3\2\2\2)\'\3\2"+
+		"\2\2)*\3\2\2\2*\3\3\2\2\2+)\3\2\2\2\5\35\')";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

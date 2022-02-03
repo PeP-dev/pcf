@@ -6,8 +6,7 @@ grammar PCF;
 term : LIT                                   # Lit
      | VAR                                   # VarUse
      | term term                             # FunUse
-     | '(' term OP2 term ')'                 # BinOp
-     | '(' term OP1 term ')'                 # BinOp
+     | '(' term ')'                          # Priority
      | term OP2 term                         # BinOp
      | term OP1 term                         # BinOp
      | 'let' VAR '=' term 'in' term          # Var
