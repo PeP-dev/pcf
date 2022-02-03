@@ -3,6 +3,7 @@ package ast;
 import interp.Closure;
 import interp.Env;
 import interp.Value;
+import typer.Arrow;
 import typer.Type;
 import typer.Var;
 
@@ -22,12 +23,12 @@ public class Fun extends Term {
         return execution;
     }
     @Override
-    public Value interp(Env e) {
+    public Value interp(Env<Value> e) {
         return new Closure(argument, execution,e);
     }
 
     @Override
     public Type typer(Env<Type> e) {
-        return execution.typer(e);
+        return new Arrow(argument.typer(e).deref(), execution.typer(e).deref()).deref();
     }
 }

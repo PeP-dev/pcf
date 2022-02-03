@@ -2,6 +2,7 @@ package ast;
 
 import interp.*;
 import typer.Type;
+import typer.TypeError;
 
 import java.util.List;
 
@@ -55,14 +56,17 @@ public class FunUse extends Term{
         Closure closure = (Closure) execution.interp(e);
         closure.setBlockEnv(closure.getBlockEnv().add(closure.getArgument().varName, this.argument.interp(e)));
         if (closure.getFunction() instanceof Fun function) {
-            Closure returnedClosure = new Closure(function.getArgValue(), function.getExecution(), closure.getBlockEnv());
-            return returnedClosure;
+            return new Closure(function.getArgValue(), function.getExecution(), closure.getBlockEnv());
         }
         return closure.getFunction().interp(closure.getBlockEnv());
     }
 
     @Override
     public Type typer(final Env<Type> e) {
-        return null;
+        Type argType = argument.typer(e);
+        Type execType = execution.typer(e);
+        if(!execType.unify(argType))
+            throw new TypeError("Couldn't unify funtion and argument");
+        return execution.typer(e).deref();
     }
 }

@@ -6,14 +6,14 @@ public abstract class Env<T> {
     public abstract boolean isEmpty();
 
     // last() returns the last binding added to the environment
-    public abstract Binding last();
+    public abstract Binding<T> last();
 
     // previous() returns the previous environment
     public abstract Env<T> previous();
 
     // creates a new environment whose last binding is id = value
-    public Env<T> add(String id, Value value) {
-        return new NonEmptyEnv<T>(new Binding(id, value), this);
+    public Env<T> add(String id, T value) {
+        return new NonEmptyEnv<T>(new Binding<T>(id, value), this);
     }
 
     // returns the value of id if it exists, hence the use of Optional

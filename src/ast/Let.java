@@ -25,13 +25,13 @@ public class Let extends Term {
 
     @Override
     public Value interp(Env<Value> e) {
-        Value interpretedVal = value.interp(e);
-        e = e.add(name,interpretedVal);
+        e = e.add(name,value.interp(e));
         return link.interp(e);
     }
 
     @Override
     public Type typer(Env<Type> e) {
-        return null;
+        e = e.add(name,value.typer(e));
+        return link.typer(e);
     }
 }

@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
+import typer.Type;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -38,8 +39,11 @@ public class Main {
 
             verbose = true;
         }
-        Value v = ((Term) analyze(is)).interp(new EmptyEnv());
+        Term term = (Term) analyze(is);
+        Value v = term.interp(new EmptyEnv<Value>());
         System.out.println(v);
+        Type t = term.typer(new EmptyEnv<Type>());
+        System.out.println(t);
     }
 
     public static AST analyze(InputStream is) throws IOException {
