@@ -9,7 +9,7 @@ public abstract class Env<T> {
     public abstract Binding last();
 
     // previous() returns the previous environment
-    public abstract Env<? extends T> previous();
+    public abstract Env<T> previous();
 
     // creates a new environment whose last binding is id = value
     public Env<T> add(String id, Value value) {
@@ -18,4 +18,19 @@ public abstract class Env<T> {
 
     // returns the value of id if it exists, hence the use of Optional
     public abstract Optional<T> lookup(String id);
+
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder("Environnement courant : \n");
+        Env<T> current = this;
+        while(current != null && !current.isEmpty()) {
+            builder.append("Var :")
+                    .append(current.last().name)
+                    .append(" = ")
+                    .append(current.last().value)
+                    .append("\n");
+            current = current.previous();
+        }
+        return builder.toString();
+    }
 }

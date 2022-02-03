@@ -5,7 +5,7 @@ import java.util.Optional;
 public class EmptyEnv<T> extends Env<T>{
     @Override
     public boolean isEmpty() {
-        return false;
+        return true;
     }
 
     @Override

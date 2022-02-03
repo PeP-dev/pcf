@@ -1,0 +1,1 @@
+let test = 3 in let add = fun x -> fun y -> fun z -> test + x + y + z in add 1 2 3

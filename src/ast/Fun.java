@@ -4,16 +4,17 @@ import interp.Closure;
 import interp.Env;
 import interp.Value;
 import typer.Type;
+import typer.Var;
 
 public class Fun extends Term {
-    private final String argument;
+    private final VarUse argument;
     private final Term execution;
-    public Fun(String argument, Term execution) {
+    public Fun(VarUse argument, Term execution) {
         this.argument = argument;
         this.execution = execution;
     }
 
-    public String getArgValue() {
+    public VarUse getArgValue() {
         return argument;
     }
 
@@ -22,7 +23,7 @@ public class Fun extends Term {
     }
     @Override
     public Value interp(Env e) {
-        return new Closure(argument, execution);
+        return new Closure(argument, execution,e);
     }
 
     @Override

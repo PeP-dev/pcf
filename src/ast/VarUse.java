@@ -15,7 +15,7 @@ public class VarUse extends Term {
 
     @Override
     public Type typer(Env<Type> e) {
-        return e;
+        return null;
     }
 
     public VarUse(String varName) {

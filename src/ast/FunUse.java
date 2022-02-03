@@ -1,6 +1,7 @@
 package ast;
 
 import interp.*;
+import typer.Type;
 
 import java.util.List;
 
@@ -15,16 +16,12 @@ import java.util.List;
  * </pre>
  * Doit renvoyer la valeur 3
  */
-public class FunUse extends VarUse{
-    private List<Term> arguments;
-
-    public FunUse(String varName, List<Term> arguments) {
-        super(varName);
-        this.arguments = arguments;
-    }
-
-    public List<Term> getArgumentValue() {
-        return arguments;
+public class FunUse extends Term{
+    Term execution;
+    Term argument;
+    public FunUse(Term execution, Term argument) {
+        this.execution = execution;
+        this.argument = argument;
     }
 
     /**
@@ -34,25 +31,17 @@ public class FunUse extends VarUse{
      */
     @Override
     public Value interp(Env<Value> e) {
-        Value funVariable = e.lookup(varName).orElseThrow(()->new VarNotDeclaredException(varName));
-        Term current;
-        if(funVariable instanceof Closure closure){
-            current = closure.getFunction();
-        } else {
-            throw new NotAFunctionException(varName);
+        Closure closure = (Closure) execution.interp(e);
+        closure.setBlockEnv(closure.getBlockEnv().add(closure.getArgument().varName, this.argument.interp(e)));
+        if (closure.getFunction() instanceof Fun function) {
+            Closure returnedClosure = new Closure(function.getArgValue(), function.getExecution(), closure.getBlockEnv());
+            return returnedClosure;
         }
-        e = e.add(closure.getArgumentName(), this.arguments.get(0).interp(e));
-        for(int i = 1; i < arguments.size(); i++) {
-            if (current instanceof Fun fun) {
-                e = e.add(fun.getArgValue(), this.arguments.get(i).interp(e));
-                current = fun.getExecution();
-            } else {
-                throw new IllegalArgumentException(String.format("Too much arguments passed to function %s",varName));
-            }
-        }
-        if (current instanceof Fun) {
-            throw new IllegalArgumentException(String.format("Too few arguments passed to function %s",varName));
-        }
-        return current.interp(e);
+        return closure.getFunction().interp(closure.getBlockEnv());
+    }
+
+    @Override
+    public Type typer(final Env<Type> e) {
+        return null;
     }
 }

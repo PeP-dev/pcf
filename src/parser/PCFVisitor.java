@@ -1,4 +1,4 @@
-// Generated from C:/Gits/PCF/src/parser\PCF.g4 by ANTLR 4.9.2
+// Generated from /home/paul.vautier/Desktop/PERSONNEL/pcf/src/parser/PCF.g4 by ANTLR 4.9.2
 package parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 

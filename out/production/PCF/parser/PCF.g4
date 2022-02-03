@@ -5,7 +5,7 @@ grammar PCF;
 // program : term EOF ;
 term : LIT                                   # Lit
      | VAR                                   # VarUse
-     | VAR (term)+                           # FunUse
+     | term term                             # FunUse
      | '(' term OP2 term ')'                 # BinOp
      | '(' term OP1 term ')'                 # BinOp
      | term OP2 term                         # BinOp

@@ -30,12 +30,4 @@ public class NonEmptyEnv<T> extends Env<T>{
     public Optional<T> lookup(String id) {
         return this.last.getName().equals(id) ? Optional.of(this.last.getValue()) : this.previous().lookup(id);
     }
-
-    @Override
-    public String toString() {
-        return "NonEmptyEnv{" +
-                "last=" + last +
-                ", previous=" + previous +
-                '}';
-    }
 }

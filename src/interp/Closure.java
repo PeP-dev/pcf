@@ -1,29 +1,40 @@
 package interp;
 
-import ast.Fun;
+import ast.VarUse;
 import ast.Term;
 
 public final class Closure extends Value {
     Term function;
-    String argumentName;
+    VarUse argument;
+    Env<Value> blockEnv;
 
-    public Closure(String argumentName, Term function) {
-        this.argumentName = argumentName;
+    public Closure(VarUse argument, Term function, Env<Value> blockEnv) {
+        this.argument = argument;
         this.function = function;
+        this.blockEnv = blockEnv;
     }
 
     public Term getFunction() {
         return function;
     }
-    public String getArgumentName(){
-        return argumentName;
+    public VarUse getArgument(){
+        return argument;
     }
 
     @Override
     public String toString() {
         return "Closure{" +
-                "function=" + function +
-                ", argumentName='" + argumentName + '\'' +
-                '}';
+                "\n    function=" + function +
+                ",\n    argument=" + argument +
+                ",\n    blockEnv=" + blockEnv +
+                "\n}";
+    }
+
+    public Env<Value> getBlockEnv() {
+        return blockEnv;
+    }
+
+    public void setBlockEnv(Env<Value> blockEnv) {
+        this.blockEnv = blockEnv;
     }
 }
